@@ -10,7 +10,11 @@ import UIKit
 
 final class TestCollectionVC: UIViewController {
     
-    private let flow: CollectionLayout = CollectionLayout()
+    private lazy var flow: CollectionLayout = {
+        let layout = CollectionLayout()
+        layout.delegate = self
+        return layout
+    }()
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .init(), collectionViewLayout: flow)
