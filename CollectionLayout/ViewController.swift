@@ -14,7 +14,9 @@ final class ViewController: UIViewController {
         
         button.setTitle("open", for: .normal)
         button.backgroundColor = .brown
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addAction(.init(handler: { _ in
+            self.buttonTapped()
+        }), for: .touchUpInside)
         return button
     }()
     
@@ -39,8 +41,6 @@ final class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
-    @objc
     func buttonTapped() {
         let vc = TestCollectionVC()
         navigationController?.pushViewController(vc, animated: true)

@@ -13,6 +13,7 @@ final class TestCollectionVC: UIViewController {
     private lazy var flow: CollectionLayout = {
         let layout = CollectionLayout()
         layout.delegate = self
+        layout.stickySection = .init(row: 0, section: 1)
         return layout
     }()
     
@@ -39,8 +40,6 @@ final class TestCollectionVC: UIViewController {
         super.viewDidLoad()
         
         flow.sectionInset = .init(top: 0, left: 0, bottom: 16, right: 0)
-        flow.minimumInteritemSpacing = 0
-        flow.sectionHeadersPinToVisibleBounds = true
         let navbarHeight: CGFloat = navigationController?.navigationBar.frame.height ?? .zero
         let statusBarHeight: CGFloat = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? .zero
         flow.topBarHeight = 0 //navbarHeight + statusBarHeight
@@ -54,7 +53,6 @@ final class TestCollectionVC: UIViewController {
             .init(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0),
             .init(item: collectionView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
             .init(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-
         ])
     }
     
@@ -163,5 +161,15 @@ extension TestCollectionVC: UICollectionViewDelegate, UICollectionViewDelegateFl
         }
         
         return .init(width: view.frame.width, height: 10)
+    }
+}
+
+extension TestCollectionVC: CollectionLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        .init(width: view.frame.width, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, sizeForSupplementaryView kind: String, at indexPath: IndexPath) -> CGSize {
+        .init(width: 100, height: 100)
     }
 }
